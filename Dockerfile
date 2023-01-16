@@ -4,7 +4,7 @@ RUN apk --no-cache add jq
 
 WORKDIR /src
 COPY ./package*.json /src/
-RUN npm install
+RUN npm install --legacy-peer-deps
 COPY . /src
 RUN npm run build
 
