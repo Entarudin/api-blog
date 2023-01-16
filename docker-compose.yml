@@ -1,0 +1,37 @@
+version: "3.5"
+services:
+  backend:
+    build: "."
+    image: "${APP_NAME}:latest"
+    env_file: "./.env"
+    container_name: "backend"
+    restart: "unless-stopped"
+    ports:
+      - "5000:5000"
+    volumes:
+      - "~/${DOCKER_SHARED_VOLUME_PATH}/${APP_NAME}/backend:/docker_shared_volume"
+    depends_on:
+      - mongo
+    networks:
+      - backend
+  mongo:
+    image: mongo:3.6
+    container_name: mongo
+    restart: "unless-stopped"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "3"
+    ports:
+      - "27017:27017"
+    volumes:
+      - "~/${DOCKER_SHARED_VOLUME_PATH}/${APP_NAME}/mongo:/data/db"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - backend
+networks:
+  backend:
+    name: backend
