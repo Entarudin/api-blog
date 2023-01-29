@@ -8,4 +8,5 @@ export interface IPostRepository {
   delete(id: string): Promise<void>;
   findAll(): Promise<PostModel[]>;
   findByOptions(options: IFindPostOptions): Promise<PostModel[]>;
+  findById(id: string): Promise<PostModel>;
 }

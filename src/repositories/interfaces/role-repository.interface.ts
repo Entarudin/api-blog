@@ -6,4 +6,5 @@ export interface IRoleRepository {
   delete(id: string): Promise<void>;
   findAll(): Promise<RoleModel[]>;
   findByName(name: string): Promise<RoleModel | undefined>;
+  findById(id: string): Promise<RoleModel | undefined>;
 }

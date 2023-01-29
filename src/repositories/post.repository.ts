@@ -13,6 +13,10 @@ export class PostRepository implements IPostRepository {
     private readonly repository: ModelType<PostModel>,
   ) {}
 
+  public async findById(id: string): Promise<PostModel> {
+    return this.repository.findById(id).exec();
+  }
+
   public async create(dto: CreatePostDto): Promise<PostModel> {
     return this.repository.create(dto);
   }

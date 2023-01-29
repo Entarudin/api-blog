@@ -11,6 +11,10 @@ export class RoleRepository implements IRoleRepository {
     private readonly repository: ModelType<RoleModel>,
   ) {}
 
+  public async findById(id: string): Promise<RoleModel> {
+    return this.repository.findById(id).exec();
+  }
+
   public async create(name: string): Promise<RoleModel> {
     return this.repository.create({ name });
   }

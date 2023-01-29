@@ -3,6 +3,8 @@ import { Injectable } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { TokenPairModel } from 'src/models/tokenPairModel';
 import { ITokenRepository } from './interfaces/token-repository.interface';
+import { CreateTokenDto } from 'src/dtos/token-dto/create-token.dto';
+import { UpdateTokenDto } from 'src/dtos/token-dto/update-token.dto';
 
 @Injectable()
 export class TokenRepository implements ITokenRepository {
@@ -11,14 +13,19 @@ export class TokenRepository implements ITokenRepository {
     private readonly repository: ModelType<TokenPairModel>,
   ) {}
 
-  public async create(name: string): Promise<TokenPairModel> {
-    return this.repository.create(name);
+  public async findById(id: string): Promise<TokenPairModel> {
+    return this.repository.findById(id).exec();
   }
 
-  public async update(id: string, name: string): Promise<TokenPairModel> {
-    return this.repository
-      .findByIdAndUpdate(id, { name }, { new: true })
-      .exec();
+  public async create(dto: CreateTokenDto): Promise<TokenPairModel> {
+    return this.repository.create(dto);
+  }
+
+  public async update(
+    id: string,
+    dto: UpdateTokenDto,
+  ): Promise<TokenPairModel> {
+    return this.repository.findByIdAndUpdate(id, dto, { new: true }).exec();
   }
 
   public async delete(id: string): Promise<void> {
