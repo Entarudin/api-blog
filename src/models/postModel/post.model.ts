@@ -1,5 +1,6 @@
 import { prop } from '@typegoose/typegoose';
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses';
+import { Types } from 'mongoose';
 
 export interface PostModel extends Base {}
 export class PostModel extends TimeStamps {
@@ -10,5 +11,5 @@ export class PostModel extends TimeStamps {
   public body: string;
 
   @prop()
-  public userId: string;
+  public userId: Types.ObjectId;
 }
