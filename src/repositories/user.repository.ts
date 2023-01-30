@@ -5,6 +5,7 @@ import { CreateUserDto, UpdateUserDto } from 'src/dtos/user-dto';
 import { UserModel } from 'src/models/userModel';
 import { IFindUserOptions } from 'src/options/find-user.options.interface';
 import { IUserRepository } from './interfaces/user-repository.interface';
+import { RoleModel } from 'src/models/roleModel';
 
 @Injectable()
 export class UserRepository implements IUserRepository {
@@ -13,8 +14,8 @@ export class UserRepository implements IUserRepository {
     private readonly repository: ModelType<UserModel>,
   ) {}
 
-  public async create(dto: CreateUserDto): Promise<UserModel> {
-    return this.repository.create(dto);
+  public async create(dto: CreateUserDto, role: RoleModel): Promise<UserModel> {
+    return this.repository.create({ ...dto, roles: role });
   }
 
   public async update(id: string, dto: UpdateUserDto): Promise<UserModel> {
@@ -30,7 +31,7 @@ export class UserRepository implements IUserRepository {
   }
 
   public async findById(id: string): Promise<UserModel> {
-    return this.repository.findById(id).exec();
+    return await this.repository.findById(id);
   }
 
   public async findByEmail(email: string): Promise<UserModel> {
