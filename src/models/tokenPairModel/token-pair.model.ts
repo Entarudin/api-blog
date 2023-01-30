@@ -1,5 +1,6 @@
 import { prop } from '@typegoose/typegoose';
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses';
+import { Types } from 'mongoose';
 
 export interface TokenPairModel extends Base {}
 export class TokenPairModel extends TimeStamps {
@@ -8,4 +9,7 @@ export class TokenPairModel extends TimeStamps {
 
   @prop()
   public refreshToken: string;
+
+  @prop()
+  public userId: Types.ObjectId;
 }
