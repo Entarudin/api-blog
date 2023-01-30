@@ -7,6 +7,7 @@ import { CreateUserDto, UpdateUserDto } from 'src/dtos/user-dto';
 import { RoleByNameNotFoundExeption } from 'src/exeptions/role-exeptions';
 import { UserByIdNotFoundExeption } from 'src/exeptions/user-exeptions';
 import { RepositoriesProviderEnum } from '../enums/repositories-provider.enum';
+import { RoleModel } from 'src/models/roleModel';
 
 @Injectable()
 export class UserService {
@@ -18,12 +19,15 @@ export class UserService {
   ) {}
 
   public async create(dto: CreateUserDto): Promise<UserModel> {
-    await this.checkRoleExistByName(dto.role);
+    const role = await this.checkRoleExistByName(dto.role);
     const passwordHash = await this.generatePasswordHash(dto.passwordHash);
-    const user = await this.userRepository.create({
-      ...dto,
-      passwordHash: passwordHash,
-    });
+    const user = await this.userRepository.create(
+      {
+        ...dto,
+        passwordHash: passwordHash,
+      },
+      role,
+    );
     return user;
   }
 
@@ -42,7 +46,7 @@ export class UserService {
     await this.userRepository.delete(id);
   }
 
-  public async getUserByLogin(email: string): Promise<UserModel | undefined> {
+  public async getUserByEmail(email: string): Promise<UserModel | undefined> {
     const user = await this.userRepository.findByEmail(email);
     return user;
   }
@@ -53,22 +57,20 @@ export class UserService {
     return updatedUser;
   }
 
-  private async checkUserExistById(
-    id: string,
-  ): Promise<void | UserByIdNotFoundExeption> {
+  private async checkUserExistById(id: string): Promise<UserModel> {
     const existUser = await this.findById(id);
     if (!existUser) {
       throw new UserByIdNotFoundExeption(id);
     }
+    return existUser;
   }
 
-  private async checkRoleExistByName(
-    roleName: string,
-  ): Promise<void | RoleByNameNotFoundExeption> {
+  private async checkRoleExistByName(roleName: string): Promise<RoleModel> {
     const existsRole = await this.roleService.findByName(roleName);
     if (!existsRole) {
       throw new RoleByNameNotFoundExeption(roleName);
     }
+    return existsRole;
   }
 
   private async generatePasswordHash(password: string): Promise<string> {

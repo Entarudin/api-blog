@@ -42,21 +42,19 @@ export class RoleService {
     return roles;
   }
 
-  private async checkExistRoleById(
-    id: string,
-  ): Promise<void | RoleByIdNotFoundExeption> {
+  private async checkExistRoleById(id: string): Promise<RoleModel> {
     const existsRole = await this.roleRepository.findById(id);
     if (!existsRole) {
       throw new RoleByIdNotFoundExeption(id);
     }
+    return existsRole;
   }
 
-  private async checkExistRoleByName(
-    name: string,
-  ): Promise<void | RoleAlreadyExistByNameExeption> {
+  private async checkExistRoleByName(name: string): Promise<RoleModel> {
     const existsRole = await this.findByName(name);
     if (existsRole) {
       throw new RoleAlreadyExistByNameExeption();
     }
+    return existsRole;
   }
 }

@@ -57,9 +57,14 @@ export class TokenService {
       email: user.email,
       roles: user.roles,
     };
-
     const accessToken = await this.generateAccessToken(payload);
     const refreshToken = await this.generateRefreshToken(payload);
+    const dto: CreateTokenDto = {
+      accessToken,
+      refreshToken,
+      userId: user._id.toString(),
+    };
+    await this.create(dto);
 
     return { accessToken, refreshToken };
   }
