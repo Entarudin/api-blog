@@ -3,5 +3,5 @@ export class CreateTokenDto {
 
   readonly refreshToken: string;
 
-  readonly userId: number;
+  readonly userId: string;
 }
