@@ -3,6 +3,6 @@ import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses';
 
 export interface RoleModel extends Base {}
 export class RoleModel extends TimeStamps {
-  @prop({ unique: true })
+  @prop()
   public name: string;
 }
