@@ -1,9 +1,13 @@
-include .env
+ENV=dev
+include ./environments/$(ENV)/.env
+
+use_secrets: 
+	cp ./environments/$(ENV)/.env ./.
 
 down:
 	docker-compose down
 
-build: 
+build: use_secrets
 	docker-compose down
 	docker-compose build
 
