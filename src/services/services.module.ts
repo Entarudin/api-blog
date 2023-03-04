@@ -5,6 +5,7 @@ import { UserService } from './user.service';
 import { TokenService } from './token.service';
 import { BcryptService } from './bcrypt.service';
 import { AuthService } from './auth.service';
+import { PostService } from './post.service';
 import { PostRepository } from '../repositories/post.repository';
 import { RoleRepository } from '../repositories/role.repository';
 import { TokenRepository } from '../repositories/token.repository';
@@ -41,7 +42,15 @@ const repositoriesProvider: Provider[] = [
     TokenService,
     BcryptService,
     AuthService,
+    PostService,
   ],
-  exports: [RoleService, UserService, TokenService, BcryptService, AuthService],
+  exports: [
+    RoleService,
+    UserService,
+    TokenService,
+    BcryptService,
+    AuthService,
+    PostService,
+  ],
 })
 export class ServicesModule {}
