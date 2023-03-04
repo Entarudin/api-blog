@@ -3,5 +3,5 @@ export enum RepositoriesProviderEnum {
   PostRepository = 'IPostRepository',
   TokenRepository = 'ITokenReposirory',
   UserRepository = 'IUserRepository',
-  CommentRepository = 'ComentsRepository',
+  CommentRepository = 'IComentRepository',
 }
