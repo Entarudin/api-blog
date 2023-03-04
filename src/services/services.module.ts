@@ -13,6 +13,8 @@ import { UserRepository } from '../repositories/user.repository';
 import { RepositoriesProviderEnum } from '../enums/repositories-provider.enum';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from '../database/database.module';
+import { CommentRepository } from 'src/repositories/comment.repository';
+import { CommentService } from './comment.service';
 
 const repositoriesProvider: Provider[] = [
   {
@@ -31,6 +33,10 @@ const repositoriesProvider: Provider[] = [
     provide: RepositoriesProviderEnum.UserRepository,
     useClass: UserRepository,
   },
+  {
+    provide: RepositoriesProviderEnum.CommentRepository,
+    useClass: CommentRepository,
+  },
 ];
 
 @Module({
@@ -43,6 +49,7 @@ const repositoriesProvider: Provider[] = [
     BcryptService,
     AuthService,
     PostService,
+    CommentService,
   ],
   exports: [
     RoleService,
@@ -51,6 +58,7 @@ const repositoriesProvider: Provider[] = [
     BcryptService,
     AuthService,
     PostService,
+    CommentService,
   ],
 })
 export class ServicesModule {}
