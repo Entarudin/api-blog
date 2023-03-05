@@ -17,13 +17,13 @@ export class RoleService {
 
   public async create(dto: CreateRoleDto): Promise<RoleModel> {
     await this.checkExistRoleByName(dto.name);
-    const role = await this.roleRepository.create(dto.name);
+    const role = await this.roleRepository.create(dto);
     return role;
   }
 
   public async update(id: string, dto: UpdateRoleDto): Promise<RoleModel> {
     await this.checkExistRoleById(id);
-    const updatedRole = await this.roleRepository.update(id, dto.name);
+    const updatedRole = await this.roleRepository.update(id, dto);
     return updatedRole;
   }
 
