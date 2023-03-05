@@ -1,10 +1,8 @@
 import { RoleModel } from '../../models/roleModel';
+import { CreateRoleDto, UpdateRoleDto } from 'src/dtos/role-dto';
+import { IBaseCRUDRepository } from './base-crud-repository.interface';
 
-export interface IRoleRepository {
-  create(name: string): Promise<RoleModel>;
-  update(id: string, name: string): Promise<RoleModel>;
-  delete(id: string): Promise<void>;
-  findAll(): Promise<RoleModel[]>;
+export interface IRoleRepository
+  extends IBaseCRUDRepository<RoleModel, CreateRoleDto, UpdateRoleDto> {
   findByName(name: string): Promise<RoleModel | undefined>;
-  findById(id: string): Promise<RoleModel | undefined>;
 }

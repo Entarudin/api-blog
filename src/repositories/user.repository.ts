@@ -1,5 +1,5 @@
 import { InjectModel } from 'nestjs-typegoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotImplementedException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { CreateUserDto, UpdateUserDto } from 'src/dtos/user-dto';
 import { UserModel } from 'src/models/userModel';
@@ -40,6 +40,6 @@ export class UserRepository implements IUserRepository {
 
   public async findByOptions(options: IFindUserOptions): Promise<UserModel[]> {
     const {} = options;
-    throw new Error('Method not implemented.');
+    throw new NotImplementedException();
   }
 }

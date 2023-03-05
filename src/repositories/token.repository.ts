@@ -1,5 +1,5 @@
 import { InjectModel } from 'nestjs-typegoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotImplementedException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 import { TokenPairModel } from 'src/models/tokenPairModel';
 import { ITokenRepository } from './interfaces/token-repository.interface';
@@ -12,6 +12,10 @@ export class TokenRepository implements ITokenRepository {
     @InjectModel(TokenPairModel)
     private readonly repository: ModelType<TokenPairModel>,
   ) {}
+
+  public async findAll(): Promise<TokenPairModel[]> {
+    throw new NotImplementedException();
+  }
 
   public async findById(id: string): Promise<TokenPairModel> {
     return this.repository.findById(id).exec();
