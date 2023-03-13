@@ -1,6 +1,7 @@
 import { InjectModel } from 'nestjs-typegoose';
 import { Injectable } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+
 import { IRoleRepository } from './interfaces/role-repository.interface';
 import { RoleModel } from 'src/models/roleModel';
 import { CreateRoleDto, UpdateRoleDto } from 'src/dtos/role-dto';

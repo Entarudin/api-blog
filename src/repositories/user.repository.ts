@@ -1,9 +1,9 @@
 import { InjectModel } from 'nestjs-typegoose';
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
-import { CreateUserDto, UpdateUserDto } from 'src/dtos/user-dto';
+
+import { CreateUserDto, FindUsersDto, UpdateUserDto } from 'src/dtos/user-dto';
 import { UserModel } from 'src/models/userModel';
-import { IFindUserOptions } from 'src/options/find-user.options.interface';
 import { IUserRepository } from './interfaces/user-repository.interface';
 import { RoleModel } from 'src/models/roleModel';
 
@@ -38,8 +38,8 @@ export class UserRepository implements IUserRepository {
     return this.repository.findOne({ email }).exec();
   }
 
-  public async findByOptions(options: IFindUserOptions): Promise<UserModel[]> {
-    const {} = options;
+  public async findByOptions(dto: FindUsersDto): Promise<UserModel[]> {
+    const {} = dto;
     throw new NotImplementedException();
   }
 }

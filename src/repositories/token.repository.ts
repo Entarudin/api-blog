@@ -1,10 +1,10 @@
 import { InjectModel } from 'nestjs-typegoose';
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+
 import { TokenPairModel } from 'src/models/tokenPairModel';
 import { ITokenRepository } from './interfaces/token-repository.interface';
-import { CreateTokenDto } from 'src/dtos/token-dto/create-token.dto';
-import { UpdateTokenDto } from 'src/dtos/token-dto/update-token.dto';
+import { CreateTokenDto, UpdateTokenDto } from 'src/dtos/token-dto';
 
 @Injectable()
 export class TokenRepository implements ITokenRepository {
