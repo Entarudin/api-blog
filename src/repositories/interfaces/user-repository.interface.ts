@@ -1,6 +1,5 @@
-import { UpdateUserDto, CreateUserDto } from 'src/dtos/user-dto';
+import { UpdateUserDto, CreateUserDto, FindUsersDto } from 'src/dtos/user-dto';
 import { UserModel } from '../../models/userModel';
-import { IFindUserOptions } from 'src/options/find-user.options.interface';
 import { RoleModel } from 'src/models/roleModel';
 import { IBaseCRUDRepository } from './base-crud-repository.interface';
 
@@ -11,5 +10,5 @@ export interface IUserRepository
   > {
   create(dto: CreateUserDto, role: RoleModel): Promise<UserModel>;
   findByEmail(email: string): Promise<UserModel | undefined>;
-  findByOptions(options: IFindUserOptions): Promise<UserModel[]>;
+  findByOptions(dto: FindUsersDto): Promise<UserModel[]>;
 }
