@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { RepositoriesProviderEnum } from '../enums/repositories-provider.enum';
 import { IPostRepository } from 'src/repositories/interfaces/post-repository.interface';
-import { CreatePostDto, UpdatePostDto } from 'src/dtos/post-dto';
+import { CreatePostDto, FindPostsDto, UpdatePostDto } from 'src/dtos/post-dto';
 import { PostModel } from 'src/models/postModel';
 import { PostByIdNotFoundExeption } from 'src/exeptions/post-exeptions';
+import { Pagination } from 'src/common/typegoose';
 
 @Injectable()
 export class PostService {
@@ -30,6 +31,11 @@ export class PostService {
 
   public async findAll(): Promise<PostModel[]> {
     const posts = await this.postRepository.findAll();
+    return posts;
+  }
+
+  public async findBy(dto: FindPostsDto): Promise<Pagination<PostModel>> {
+    const posts = await this.postRepository.findByOptions(dto);
     return posts;
   }
 
