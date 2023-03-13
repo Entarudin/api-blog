@@ -1,10 +1,11 @@
-import { CreatePostDto, UpdatePostDto } from 'src/dtos/post-dto';
-import { PostModel } from 'src/models/postModel';
-import { IFindPostOptions } from 'src/options/find-post.options.interface';
-import { IPostRepository } from './interfaces/post-repository.interface';
 import { InjectModel } from 'nestjs-typegoose';
 import { Injectable } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
+
+import { CreatePostDto, FindPostsDto, UpdatePostDto } from 'src/dtos/post-dto';
+import { PostModel } from 'src/models/postModel';
+import { IPostRepository } from './interfaces/post-repository.interface';
+import { Pagination, paginationPipeLine } from 'src/common/typegoose';
 
 @Injectable()
 export class PostRepository implements IPostRepository {
@@ -33,8 +34,14 @@ export class PostRepository implements IPostRepository {
     return this.repository.find({}).exec();
   }
 
-  public async findByOptions(options: IFindPostOptions): Promise<PostModel[]> {
-    const {} = options;
-    throw new Error('Method not implemented.');
+  public async findByOptions<T extends Pagination<PostModel>>(
+    dto: FindPostsDto,
+  ): Promise<T> {
+    const { page, limit, offset } = dto;
+    const posts = await this.repository
+      .aggregate(paginationPipeLine(page, limit, offset))
+      .exec();
+
+    return posts as T;
   }
 }
