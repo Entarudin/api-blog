@@ -1,6 +1,5 @@
-import { CreateTokenDto } from 'src/dtos/token-dto/create-token.dto';
+import { CreateTokenDto, UpdateTokenDto } from 'src/dtos/token-dto';
 import { TokenPairModel } from '../../models/tokenPairModel';
-import { UpdateTokenDto } from 'src/dtos/token-dto/update-token.dto';
 import { IBaseCRUDRepository } from './base-crud-repository.interface';
 
 export interface ITokenRepository
