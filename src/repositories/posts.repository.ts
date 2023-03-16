@@ -4,11 +4,11 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 
 import { CreatePostDto, FindPostsDto, UpdatePostDto } from 'src/dtos/post-dto';
 import { PostModel } from 'src/models/postModel';
-import { IPostRepository } from './interfaces/post-repository.interface';
-import { Pagination, paginationPipeLine } from 'src/common/typegoose';
+import { IPostsRepository } from './interfaces/posts-repository.interface';
+import { Pagination, paginationPipeLine } from 'src/common/pagination';
 
 @Injectable()
-export class PostRepository implements IPostRepository {
+export class PostsRepository implements IPostsRepository {
   constructor(
     @InjectModel(PostModel)
     private readonly repository: ModelType<PostModel>,

@@ -2,12 +2,12 @@ import { InjectModel } from 'nestjs-typegoose';
 import { Injectable } from '@nestjs/common';
 import { ModelType } from '@typegoose/typegoose/lib/types';
 
-import { IRoleRepository } from './interfaces/role-repository.interface';
+import { IRolesRepository } from './interfaces/roles-repository.interface';
 import { RoleModel } from 'src/models/roleModel';
 import { CreateRoleDto, UpdateRoleDto } from 'src/dtos/role-dto';
 
 @Injectable()
-export class RoleRepository implements IRoleRepository {
+export class RolesRepository implements IRolesRepository {
   constructor(
     @InjectModel(RoleModel)
     private readonly repository: ModelType<RoleModel>,

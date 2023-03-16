@@ -1,7 +1,7 @@
 export enum RepositoriesProviderEnum {
-  RoleRepository = 'IRoleRepository',
-  PostRepository = 'IPostRepository',
-  TokenRepository = 'ITokenReposirory',
-  UserRepository = 'IUserRepository',
-  CommentRepository = 'IComentRepository',
+  RolesRepository = 'IRolesRepository',
+  PostsRepository = 'IPostsRepository',
+  TokensRepository = 'ITokensReposirory',
+  UsersRepository = 'IUsersRepository',
+  CommentsRepository = 'IComentsRepository',
 }

@@ -1,41 +1,41 @@
 import { Module, Provider } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { RoleService } from './role.service';
-import { UserService } from './user.service';
-import { TokenService } from './token.service';
+import { RolesService } from './roles.service';
+import { UsersService } from './users.service';
+import { TokensService } from './tokens.service';
 import { BcryptService } from './bcrypt.service';
 import { AuthService } from './auth.service';
-import { PostService } from './post.service';
-import { PostRepository } from '../repositories/post.repository';
-import { RoleRepository } from '../repositories/role.repository';
-import { TokenRepository } from '../repositories/token.repository';
-import { UserRepository } from '../repositories/user.repository';
+import { PostsService } from './posts.service';
+import { PostsRepository } from '../repositories/posts.repository';
+import { RolesRepository } from '../repositories/roles.repository';
+import { TokensRepository } from '../repositories/tokens.repository';
+import { UsersRepository } from '../repositories/users.repository';
 import { RepositoriesProviderEnum } from '../enums/repositories-provider.enum';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from '../database/database.module';
-import { CommentRepository } from 'src/repositories/comment.repository';
-import { CommentService } from './comment.service';
+import { CommentsRepository } from 'src/repositories/comments.repository';
+import { CommentsService } from './comments.service';
 
 const repositoriesProvider: Provider[] = [
   {
-    provide: RepositoriesProviderEnum.PostRepository,
-    useClass: PostRepository,
+    provide: RepositoriesProviderEnum.PostsRepository,
+    useClass: PostsRepository,
   },
   {
-    provide: RepositoriesProviderEnum.RoleRepository,
-    useClass: RoleRepository,
+    provide: RepositoriesProviderEnum.RolesRepository,
+    useClass: RolesRepository,
   },
   {
-    provide: RepositoriesProviderEnum.TokenRepository,
-    useClass: TokenRepository,
+    provide: RepositoriesProviderEnum.TokensRepository,
+    useClass: TokensRepository,
   },
   {
-    provide: RepositoriesProviderEnum.UserRepository,
-    useClass: UserRepository,
+    provide: RepositoriesProviderEnum.UsersRepository,
+    useClass: UsersRepository,
   },
   {
-    provide: RepositoriesProviderEnum.CommentRepository,
-    useClass: CommentRepository,
+    provide: RepositoriesProviderEnum.CommentsRepository,
+    useClass: CommentsRepository,
   },
 ];
 
@@ -43,22 +43,22 @@ const repositoriesProvider: Provider[] = [
   imports: [JwtModule.register({}), ConfigModule, DatabaseModule],
   providers: [
     ...repositoriesProvider,
-    RoleService,
-    UserService,
-    TokenService,
+    RolesService,
+    UsersService,
+    TokensService,
     BcryptService,
     AuthService,
-    PostService,
-    CommentService,
+    PostsService,
+    CommentsService,
   ],
   exports: [
-    RoleService,
-    UserService,
-    TokenService,
+    RolesService,
+    UsersService,
+    TokensService,
     BcryptService,
     AuthService,
-    PostService,
-    CommentService,
+    PostsService,
+    CommentsService,
   ],
 })
 export class ServicesModule {}

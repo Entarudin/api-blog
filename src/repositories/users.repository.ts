@@ -4,11 +4,11 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 
 import { CreateUserDto, FindUsersDto, UpdateUserDto } from 'src/dtos/user-dto';
 import { UserModel } from 'src/models/userModel';
-import { IUserRepository } from './interfaces/user-repository.interface';
+import { IUsersRepository } from './interfaces/users-repository.interface';
 import { RoleModel } from 'src/models/roleModel';
 
 @Injectable()
-export class UserRepository implements IUserRepository {
+export class UsersRepository implements IUsersRepository {
   constructor(
     @InjectModel(UserModel)
     private readonly repository: ModelType<UserModel>,

@@ -1,7 +1,7 @@
 import { CreateUserDto } from 'src/dtos/user-dto';
 import { BcryptService } from './bcrypt.service';
-import { TokenService, TokensViewModel } from './token.service';
-import { UserService } from './user.service';
+import { TokensService, TokensViewModel } from './tokens.service';
+import { UsersService } from './users.service';
 import { UserAlreadyExistByEmailExeption } from 'src/exeptions/user-exeptions';
 import { Injectable } from '@nestjs/common';
 import { UserModel } from 'src/models/userModel';
@@ -16,8 +16,8 @@ export type LoginUserType = Omit<CreateUserDto, 'role'>;
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService: UserService,
-    private readonly tokenService: TokenService,
+    private readonly userService: UsersService,
+    private readonly tokenService: TokensService,
     private readonly bcryptService: BcryptService,
   ) {}
 

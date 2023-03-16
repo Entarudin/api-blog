@@ -3,7 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { RoleModel } from '../models/roleModel';
 import { TokenPairModel } from '../models/tokenPairModel';
 import { UserModel } from '../models/userModel';
-import { ITokenRepository } from 'src/repositories/interfaces/token-repository.interface';
+import { ITokensRepository } from 'src/repositories/interfaces/tokens-repository.interface';
 import { ConfigService } from '@nestjs/config';
 import { RepositoriesProviderEnum } from '../enums/repositories-provider.enum';
 import { CreateTokenDto } from 'src/dtos/token-dto/create-token.dto';
@@ -22,23 +22,23 @@ export type TokensViewModel = {
 };
 
 @Injectable()
-export class TokenService {
+export class TokensService {
   constructor(
-    @Inject(RepositoriesProviderEnum.TokenRepository)
-    private readonly tokenRepository: ITokenRepository,
+    @Inject(RepositoriesProviderEnum.TokensRepository)
+    private readonly tokensRepository: ITokensRepository,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
   ) {}
 
   public async create(dto: CreateTokenDto): Promise<TokenPairModel> {
-    const token = await this.tokenRepository.create(dto);
+    const token = await this.tokensRepository.create(dto);
     return token;
   }
 
   public async findByRefreshToken(
     refreshToken: string,
   ): Promise<TokenPairModel> {
-    const token = await this.tokenRepository.findByRefreshToken(refreshToken);
+    const token = await this.tokensRepository.findByRefreshToken(refreshToken);
     return token;
   }
 
@@ -48,7 +48,7 @@ export class TokenService {
       throw new TokensByRefreshTokenNotFoundExeption(refreshToken);
     }
     const tokenId = findToken._id.toString();
-    await this.tokenRepository.delete(tokenId);
+    await this.tokensRepository.delete(tokenId);
   }
 
   public async generateTokens(user: UserModel): Promise<TokensViewModel> {
