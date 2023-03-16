@@ -1,5 +1,6 @@
 import { prop } from '@typegoose/typegoose';
 import { TimeStamps, Base } from '@typegoose/typegoose/lib/defaultClasses';
+import { Types } from 'mongoose';
 
 export interface CommentModel extends Base {}
 export class CommentModel extends TimeStamps {
@@ -7,8 +8,8 @@ export class CommentModel extends TimeStamps {
   public text: string;
 
   @prop()
-  public postId: string;
+  public postId: Types.ObjectId;
 
   @prop()
-  public userId: string;
+  public userId: Types.ObjectId;
 }
