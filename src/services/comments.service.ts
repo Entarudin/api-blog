@@ -3,17 +3,17 @@ import { RepositoriesProviderEnum } from '../enums/repositories-provider.enum';
 import { CreateCommentDto, UpdateCommentDto } from 'src/dtos/comment-dto';
 import { CommentModel } from 'src/models/commentModel';
 import { CommentByIdNotFoundExeption } from 'src/exeptions/comment-exeptions';
-import { ICommentRepository } from 'src/repositories/interfaces/comment-repository.interface';
+import { ICommentsRepository } from 'src/repositories/interfaces/comments-repository.interface';
 
 @Injectable()
-export class CommentService {
+export class CommentsService {
   constructor(
-    @Inject(RepositoriesProviderEnum.CommentRepository)
-    private readonly commentRepository: ICommentRepository,
+    @Inject(RepositoriesProviderEnum.CommentsRepository)
+    private readonly commentsRepository: ICommentsRepository,
   ) {}
 
   public async create(dto: CreateCommentDto): Promise<CommentModel> {
-    const comment = await this.commentRepository.create(dto);
+    const comment = await this.commentsRepository.create(dto);
     return comment;
   }
 
@@ -22,22 +22,22 @@ export class CommentService {
     dto: UpdateCommentDto,
   ): Promise<CommentModel> {
     await this.checkExistCommentById(id);
-    const updatedComment = await this.commentRepository.update(id, dto);
+    const updatedComment = await this.commentsRepository.update(id, dto);
     return updatedComment;
   }
 
   public async delete(id: string): Promise<void> {
     await this.checkExistCommentById(id);
-    await this.commentRepository.delete(id);
+    await this.commentsRepository.delete(id);
   }
 
   public async findAll(): Promise<CommentModel[]> {
-    const comments = await this.commentRepository.findAll();
+    const comments = await this.commentsRepository.findAll();
     return comments;
   }
 
   private async checkExistCommentById(id: string): Promise<CommentModel> {
-    const existsComment = await this.commentRepository.findById(id);
+    const existsComment = await this.commentsRepository.findById(id);
     if (!existsComment) {
       throw new CommentByIdNotFoundExeption(id);
     }

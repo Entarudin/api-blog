@@ -3,7 +3,7 @@ import { UserModel } from '../../models/userModel';
 import { RoleModel } from 'src/models/roleModel';
 import { IBaseCRUDRepository } from './base-crud-repository.interface';
 
-export interface IUserRepository
+export interface IUsersRepository
   extends Omit<
     IBaseCRUDRepository<UserModel, CreateUserDto, UpdateUserDto>,
     'create'

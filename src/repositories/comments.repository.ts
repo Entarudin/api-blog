@@ -4,10 +4,10 @@ import { ModelType } from '@typegoose/typegoose/lib/types';
 
 import { CreateCommentDto, UpdateCommentDto } from 'src/dtos/comment-dto';
 import { CommentModel } from 'src/models/commentModel';
-import { ICommentRepository } from './interfaces/comment-repository.interface';
+import { ICommentsRepository } from './interfaces/comments-repository.interface';
 
 @Injectable()
-export class CommentRepository implements ICommentRepository {
+export class CommentsRepository implements ICommentsRepository {
   constructor(
     @InjectModel(CommentModel)
     private readonly repository: ModelType<CommentModel>,
