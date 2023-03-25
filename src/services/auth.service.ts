@@ -60,13 +60,16 @@ export class AuthService {
 
   private async validateUser(fields: LoginUserType): Promise<UserModel> {
     const user = await this.userService.getUserByEmail(fields.email);
+    if (!user) {
+      throw new IncorectAuthDataExeption();
+    }
     const passwordEquals = await this.bcryptService.compareHash(
       fields.passwordHash,
       user.passwordHash,
     );
-    if (user && passwordEquals) {
-      return user;
+    if (!passwordEquals) {
+      throw new IncorectAuthDataExeption();
     }
-    throw new IncorectAuthDataExeption();
+    return user;
   }
 }
