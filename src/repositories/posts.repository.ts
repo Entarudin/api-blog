@@ -1,44 +1,30 @@
 import { InjectModel } from 'nestjs-typegoose';
 import { Injectable } from '@nestjs/common';
-import { ModelType } from '@typegoose/typegoose/lib/types';
+import { ReturnModelType } from '@typegoose/typegoose/lib/types';
 
 import { CreatePostDto, FindPostsDto, UpdatePostDto } from 'src/dtos/post-dto';
 import { PostModel } from 'src/models/postModel';
 import { IPostsRepository } from './interfaces/posts-repository.interface';
 import { Pagination, paginationPipeLine } from 'src/common/pagination';
+import { MongoGenericRepository } from './mongo-generic.repository';
 
 @Injectable()
-export class PostsRepository implements IPostsRepository {
+export class PostsRepository
+  extends MongoGenericRepository<PostModel, CreatePostDto, UpdatePostDto>
+  implements IPostsRepository
+{
   constructor(
     @InjectModel(PostModel)
-    private readonly repository: ModelType<PostModel>,
-  ) {}
-
-  public async findById(id: string): Promise<PostModel> {
-    return this.repository.findById(id).exec();
-  }
-
-  public async create(dto: CreatePostDto): Promise<PostModel> {
-    return this.repository.create(dto);
-  }
-
-  public async update(id: string, dto: UpdatePostDto): Promise<PostModel> {
-    return this.repository.findByIdAndUpdate(id, dto, { new: true }).exec();
-  }
-
-  public async delete(id: string): Promise<void> {
-    await this.repository.findByIdAndDelete(id).exec();
-  }
-
-  public async findAll(): Promise<PostModel[]> {
-    return this.repository.find({}).exec();
+    private readonly postModel: ReturnModelType<typeof PostModel>,
+  ) {
+    super(postModel);
   }
 
   public async findByOptions<T extends Pagination<PostModel>>(
     dto: FindPostsDto,
   ): Promise<T> {
     const { page, limit, offset } = dto;
-    const posts = await this.repository
+    const posts = await this.postModel
       .aggregate(paginationPipeLine(page, limit, offset))
       .exec();
 
